@@ -8,6 +8,7 @@ public class MapScrolling : MonoBehaviour
     public float speed;
     public float scrollRange;
     public Vector3 dir = Vector3.down;
+
     private void Update()
     {
         transform.position += dir * speed * Time.deltaTime;
