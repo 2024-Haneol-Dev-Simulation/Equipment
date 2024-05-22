@@ -8,4 +8,9 @@ public abstract class Equipment : ScriptableObject
 
     //set
     public string experience;
+
+    public string GetEquipmentType()
+    {
+        return this.GetType().ToString();
+    }
 }
