@@ -15,8 +15,8 @@ MonoBehaviour:
   equipmentSets:
   - setName: "\uBC41\uC0C8\uC758 \uC774\uC57C\uAE30"
     Set2option:
-      optionType: 1
-      value: 18
+      optionType: 2
+      value: 20
     Set4option: "\uACF5\uACA9\uC774 \uC911\uCCA9\uB9C8\uB2E4 \uACF5\uACA9\uB825\uC774
       \uC99D\uAC00\uD569\uB2C8\uB2E4"
     equipment:
@@ -26,7 +26,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c01b79cba12051a489c712149a504909, type: 2}
   - setName: "\uAD34\uBB3C\uC774 \uD53C\uB294 \uC232"
     Set2option:
-      optionType: 1
+      optionType: 0
       value: 18
     Set4option: "\uAE30\uBCF8 \uACF5\uACA9\uC5D0 \uB3C4\uD2B8 \uB370\uBBF8\uC9C0\uAC00
       \uCD94\uAC00\uB429\uB2C8\uB2E4"

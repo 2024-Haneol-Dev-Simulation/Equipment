@@ -9,6 +9,7 @@ public class EquipmentSetUI : MonoBehaviour
     [Header("Value")]
     [SerializeField] private bool showSetCount;
     [SerializeField] private bool showAllSetEffect;
+    [SerializeField] private bool IgnoreSetActiveCount;
     [Header("UI")]
     [SerializeField] private TMP_Text equipmentSetNameText;
     [Space(10)]
@@ -30,26 +31,26 @@ public class EquipmentSetUI : MonoBehaviour
         set2Text.text = $"2세트: {myEquipmentSet.equipmentSet.Set2option.GetAllOptionString()}";
         set4Text.text = $"4세트: {myEquipmentSet.equipmentSet.Set4option}";
 
-        if (myEquipmentSet.activeCount >= 2)
+        if (myEquipmentSet.activeCount >= 2 && !IgnoreSetActiveCount)
         {
             set2Object.GetComponent<CanvasGroup>().alpha = 1;
             set2Text.color = new Color32(155, 255, 139, 255);
         }
         else
         {
-            set2Text.color = Color.white;
-            set2Object.GetComponent<CanvasGroup>().alpha = 0.5f;
+            set2Text.color = new Color32(119, 124, 134, 255);
+            set2Object.GetComponent<CanvasGroup>().alpha = 1f;
         }
 
-        if(myEquipmentSet.activeCount >= 4)
+        if(myEquipmentSet.activeCount >= 4 && !IgnoreSetActiveCount)
         {
             set4Object.GetComponent<CanvasGroup>().alpha = 1;
             set4Text.color = new Color32(155, 255, 139, 255);
         }
         else if(showAllSetEffect)
         {
-            set4Object.GetComponent<CanvasGroup>().alpha = 0.5f;
-            set4Text.color = Color.white;
+            set4Object.GetComponent<CanvasGroup>().alpha = 1f;
+            set4Text.color = new Color32(119, 124, 134, 255);
         }
         else
         {

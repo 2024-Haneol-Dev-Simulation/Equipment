@@ -9,17 +9,18 @@ public class MyEquipment
     public string UID;
     public Equipment equipment;
 
+    public EquipmentClass equipmentClass;
+
     public Option mainOption;
     public List<Option> additionalOption;
 
-    public EquipmentClass equipmentClass;
 
     public int enhancement;
+    public int enhancementExperience;
 }
 
 public enum EquipmentClass
 {
-    Nomal,
     Rare,
     Legend
 }

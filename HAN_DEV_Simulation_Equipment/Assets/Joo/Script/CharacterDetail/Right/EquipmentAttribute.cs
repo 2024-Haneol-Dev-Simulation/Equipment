@@ -4,11 +4,14 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class EquipmentAttribute : UIElement
 {
     [Header("System")]
     [SerializeField] private EquipmentSystem equipmentSystem;
+    [SerializeField] private EquipmentList equipmentList;
+    
     [Header("UI")]
     [SerializeField] private TMP_Text EquipmentNameText;
     [SerializeField] private TMP_Text EquipmentTypeText;
@@ -28,8 +31,10 @@ public class EquipmentAttribute : UIElement
 
     [SerializeField] private Button equipOrUnequipButton;
     [SerializeField] private TMP_Text equipOrUnequipText;
-    public void Init(MyEquipment myEquipment)
+    public void Init()
     {
+        MyEquipment myEquipment = equipmentSystem.GetEquipment(equipmentSystem.SelectEquipmentID);
+
         EquipmentNameText.text = myEquipment.equipment.name;
         EquipmentTypeText.text = myEquipment.equipment.GetEquipmentType();
 
@@ -48,20 +53,39 @@ public class EquipmentAttribute : UIElement
 
         //ÀåÂø ÇØÁ¦
         equipOrUnequipButton.onClick.RemoveAllListeners();
-        if (equipmentSystem.GetEquipEquipment(myEquipment.equipment.GetType()) == myEquipment)
+        if (equipmentSystem.EqualsEquipEquipment(myEquipment.equipment.GetType(), myEquipment.UID))
         {
-            equipOrUnequipText.text = "ÇØÁ¦"; 
+            equipOrUnequipText.text = "ÇØÁ¦";
+            
             equipOrUnequipButton.onClick.AddListener(() => { 
                 equipmentSystem.RemoveEquipEquipment(myEquipment.equipment.GetType());
-                Init(myEquipment);
+                Init();
+
+                equipmentList.GetButton(equipmentSystem.SelectEquipmentID).GetComponent<ElementEuqipmentButton>().UnEquip();
+
             });
+
+            
         }
-        else
+        else 
         {
-            equipOrUnequipText.text = "ÀåÂø";
-            equipOrUnequipButton.onClick.AddListener(() => { 
+            if (!equipmentSystem.CheckEquipEquipment(myEquipment.equipment.GetType()))
+                equipOrUnequipText.text = "ÀåÂø";
+            else
+                equipOrUnequipText.text = "±³Ã¼";
+
+            equipOrUnequipButton.onClick.AddListener(() => {
+
+                Type type = equipmentSystem.GetEquipment(equipmentSystem.SelectEquipmentID).equipment.GetType();
+
+                if (equipmentSystem.CheckEquipEquipment(myEquipment.equipment.GetType()))
+                    equipmentList.GetButton(
+                        equipmentSystem.GetEquipEquipment(type).UID).GetComponent<ElementEuqipmentButton>().UnEquip();
+
                 equipmentSystem.SetEquipEquipment(myEquipment);
-                Init(myEquipment);
+                Init();
+
+                equipmentList.GetButton(equipmentSystem.SelectEquipmentID).GetComponent<ElementEuqipmentButton>().Equip();
             });
         }
 
@@ -71,9 +95,6 @@ public class EquipmentAttribute : UIElement
     {
         switch (equipmentClass)
         {
-            case EquipmentClass.Nomal:
-                RatingText.text = "¡Ú¡Ú¡Ú";
-                break;
             case EquipmentClass.Rare:
                 RatingText.text = "¡Ú¡Ú¡Ú¡Ú";
                 break;

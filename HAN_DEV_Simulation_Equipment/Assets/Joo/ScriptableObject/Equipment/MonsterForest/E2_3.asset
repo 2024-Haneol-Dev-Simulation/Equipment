@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: E2_3
   m_EditorClassIdentifier: 
   name: "\uAD34\uBB3C\uC758 \uBD88\uAF43"
-  experience: 
+  image: {fileID: 21300000, guid: 45efb7209a30fe941b33dc3f172d8be4, type: 3}
+  experience: "\uBD88\uAE38\uC774 \uC9C0\uB098\uAC04 \uACF3\uC740 \uAE30\uD544\uACE0
+    \uC0DD\uBA85\uC774 \uC0AC\uADF8\uB77C\uC9D1\uB2C8\uB2E4"

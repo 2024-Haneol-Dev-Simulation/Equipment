@@ -10,7 +10,7 @@ public class AdditionalOption : MonoBehaviour
     {
         for(int i = 0; i < optionTextList.Count; i++)
         {
-            if(i >= options.Count-1)
+            if(i > options.Count-1)
             {
                 optionTextList[i].gameObject.SetActive(false);
                 continue;

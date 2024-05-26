@@ -9,7 +9,7 @@ public class EquipmentSetData : ScriptableObject
 {
     public List<EquipmentSet> equipmentSets;
 
-    public void GetAllEquipmentSet(List<Equipment> equipment)
+    public List<MyEquipmentSet> GetAllEquipmentSet(List<Equipment> equipment)
     {
         List<MyEquipmentSet> myEquipSet = new List<MyEquipmentSet>();
         for (int i = 0; i < equipmentSets.Count; i++)
@@ -29,10 +29,7 @@ public class EquipmentSetData : ScriptableObject
 
         }
 
-        foreach(var equipmentSet in myEquipSet)
-        {
-            Debug.Log($"{equipmentSet.equipmentSet.setName} : {equipmentSet.activeCount}");
-        }
+        return myEquipSet;
     }
     public MyEquipmentSet GetEquipmentSet(Equipment targetEquipment, List<Equipment> equipment)
     {

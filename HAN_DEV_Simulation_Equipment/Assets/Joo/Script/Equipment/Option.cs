@@ -26,6 +26,8 @@ public class Option
                 return "치명타 확률";
             case OptionType.CritDMG:
                 return "치명타 피해";
+            case OptionType.Healing:
+                return "치유량 증가";
             default:
                 return string.Empty;
         }
@@ -52,12 +54,13 @@ public class Option
 
 public enum OptionType
 {
-    FlatATK,
     ATK,
-    FlatDEF,
     DEF,
-    FlatHP,
     HP,
     CritRate,
-    CritDMG
+    CritDMG,
+    Healing,
+    FlatDEF,
+    FlatATK,
+    FlatHP
 }

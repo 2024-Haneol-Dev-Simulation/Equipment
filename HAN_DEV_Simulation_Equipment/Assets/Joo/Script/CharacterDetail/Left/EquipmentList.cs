@@ -4,120 +4,133 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+using UnityEditor;
 
 public class EquipmentList : UIElement
 {
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private EquipmentSystem equipmentSystem;
+    [SerializeField] private EquipmentListMenu menu;
     [SerializeField] private GameObject ElementEuqipmentButtonPrefab;
     [SerializeField] private EquipmentAttribute equipmentAttribute;
+    [SerializeField] protected CharacterEquimentButton characterEquimentButton;
 
     [SerializeField] private GameObject Head_EquipmentInventory;
     [SerializeField] private GameObject Wing_EquipmentInventory;
     [SerializeField] private GameObject Missle_EquipmentInventory;
     [SerializeField] private GameObject Engine_EquipmentInventory;
 
-    private List<GameObject> headEquipmentList;
-    private List<GameObject> wingEquipmentList;
-    private List<GameObject> missleEquipmentList;
-    private List<GameObject> engineEquipmentList;
+    private Dictionary<string,GameObject> equipmentDictionary;
+
+    private Action _unSelectAction;
     public void Init()
     {
         List<MyEquipment> myEquipment = playerData.GetAllInventoryEquipment();
 
-        headEquipmentList = new List<GameObject>();
-        wingEquipmentList = new List<GameObject>();
-        missleEquipmentList = new List<GameObject>();
-        engineEquipmentList = new List<GameObject>();
+        equipmentDictionary = new Dictionary<string, GameObject>();
 
         DestoryChild(Head_EquipmentInventory);
         DestoryChild(Wing_EquipmentInventory);
         DestoryChild(Missle_EquipmentInventory);
         DestoryChild(Engine_EquipmentInventory);
 
+        Transform itemParent;
+        string EquipEquipmentUid = string.Empty;
         foreach (MyEquipment item in myEquipment)
         {
             GameObject obj;
             if (item.equipment.GetType() == typeof(EquipmentHead))
             {
-                Debug.Log("Head");
-                obj = Instantiate(ElementEuqipmentButtonPrefab, Head_EquipmentInventory.transform);
-                obj.GetComponent<ElementEuqipmentButton>().InitButton(item, ()=> { equipmentAttribute.Init(item); });
-                headEquipmentList.Add(obj);
+                itemParent = Head_EquipmentInventory.transform;
+                EquipEquipmentUid = playerData.HeadEquipEquipmentInstanceID;
             }
             else if(item.equipment.GetType() == typeof(EquipmentWing))
             {
-                Debug.Log("Wing");
-                obj = Instantiate(ElementEuqipmentButtonPrefab, Wing_EquipmentInventory.transform);
-                obj.GetComponent<ElementEuqipmentButton>().InitButton(item, () => { equipmentAttribute.Init(item); });
-                wingEquipmentList.Add (obj);
+                itemParent = Wing_EquipmentInventory.transform;
+                EquipEquipmentUid = playerData.WingEquipEquipmentInstanceID;
             }
             else if (item.equipment.GetType() == typeof(EquipmentMissle))
             {
-                Debug.Log("Missle");
-                obj = Instantiate(ElementEuqipmentButtonPrefab, Missle_EquipmentInventory.transform);
-                obj.GetComponent<ElementEuqipmentButton>().InitButton(item, () => { equipmentAttribute.Init(item); });
-                missleEquipmentList.Add(obj);
+                itemParent = Missle_EquipmentInventory.transform;
+                EquipEquipmentUid = playerData.MissleEquipEquipmentInstanceID;
             }
-            else if (item.equipment.GetType() == typeof(EquipmentEngine))
+            else 
             {
-                Debug.Log("Engine");
-                obj = Instantiate(ElementEuqipmentButtonPrefab, Engine_EquipmentInventory.transform);
-                obj.GetComponent<ElementEuqipmentButton>().InitButton(item, () => { equipmentAttribute.Init(item); });
-                engineEquipmentList.Add(obj);
+                itemParent = Engine_EquipmentInventory.transform;
+                EquipEquipmentUid = playerData.EngineEquipEquipmentInstanceID;
+            }
+            //-------------------------------------
+            obj = Instantiate(ElementEuqipmentButtonPrefab, itemParent);
+            obj.GetComponent<ElementEuqipmentButton>().InitButton(item, () => {
+                equipmentSystem.SelectEquipmentID = item.UID;
+                equipmentAttribute.Init();
+                characterEquimentButton.SetButton(item);
+                obj.GetComponent<ElementEuqipmentButton>().Select();
+
+                if (_unSelectAction != null)
+                    _unSelectAction();
+
+
+                _unSelectAction = () =>
+                {
+                    obj.GetComponent<ElementEuqipmentButton>().UnSelect();
+                    _unSelectAction = null;
+                };
+            });
+
+            equipmentDictionary.Add(item.UID, obj);
+            if (item.UID == EquipEquipmentUid)
+            {
+                obj.GetComponent<ElementEuqipmentButton>().Equip();
+            }
+
+            if (equipmentSystem.SelectEquipmentID == item.UID)
+            {
+                obj.GetComponent<Button>().onClick.Invoke();
             }
         }
     }
     public void SelectEquipment(MyEquipment myEquipment)
     {
-        List<GameObject> targtList;
-        if (myEquipment.equipment.GetType() == typeof(EquipmentHead))
-        {
-            targtList = headEquipmentList;
-        }
-        else if (myEquipment.equipment.GetType() == typeof(EquipmentWing))
-        {
-            targtList = wingEquipmentList;
-        }
-        else if (myEquipment.equipment.GetType() == typeof(EquipmentMissle))
-        {
-            targtList = missleEquipmentList;
-        }
-        else
-        {
-            targtList = engineEquipmentList;
-        }
-
-        foreach (GameObject obj in targtList)
-        {
-            if(obj.GetComponent<ElementEuqipmentButton>().CheackEqualsequipment(myEquipment))
-            {
-                obj.GetComponent<ElementEuqipmentButton>().Select();
-                obj.GetComponent<Button>().onClick.Invoke();
-            }
-        }
+        equipmentDictionary[myEquipment.UID].GetComponent<ElementEuqipmentButton>().Equip();
+        equipmentDictionary[myEquipment.UID].GetComponent<Button>().onClick.Invoke();
     }
     public void SelectEquipment(Type type,int index)
     {
-        List<GameObject> targtList;
+        GameObject targtParent;
         if (type == typeof(EquipmentHead))
         {
-            targtList = headEquipmentList;
+            targtParent = Head_EquipmentInventory;
+            //menu.OpenEquipmentList(0);
         }
         else if (type == typeof(EquipmentWing))
         {
-            targtList = wingEquipmentList;
+            targtParent = Wing_EquipmentInventory;
+            //menu.OpenEquipmentList(1);
         }
         else if (type == typeof(EquipmentMissle))
         {
-            targtList = missleEquipmentList;
+            targtParent = Missle_EquipmentInventory;
+            //menu.OpenEquipmentList(2);
         }
         else
         {
-            targtList = engineEquipmentList;
+            targtParent = Engine_EquipmentInventory;
+            //menu.OpenEquipmentList(3);
         }
-
-        targtList[index].GetComponent<ElementEuqipmentButton>().Select();
-        targtList[index].GetComponent<Button>().onClick.Invoke();
+        
+        targtParent.transform.GetChild(index).GetComponent<ElementEuqipmentButton>().Select();
+        targtParent.transform.GetChild(index).GetComponent<Button>().onClick.Invoke();
+    }
+    public GameObject GetButton(string uid)
+    {
+        if (!equipmentDictionary.ContainsKey(uid))
+        {
+            Debug.LogError($"equipmentDictionary not ContainsKey : {uid}");
+            return null;
+        }
+        return equipmentDictionary[uid];
     }
     private void DestoryChild(GameObject obj)
     {
@@ -128,11 +141,13 @@ public class EquipmentList : UIElement
     }
     public override void Hide(HideType hideType, Complete complete = null)
     {
+        //equipmentSystem.SelectEquipmentID = string.Empty;
         gameObject.SetActive(false);
     }
 
     public override void Show(ShowType showType, Complete complete = null)
     {
+        _unSelectAction = null;
         Init();
         gameObject.SetActive(true);
         if (showType == ShowType.FadeAndMove)
