@@ -85,6 +85,10 @@ public class EquipmentListMenu : MonoBehaviour
             equipmentObjectList[selectIndex].SetActive(false);
 
             //characterEquipmentButton.HideButton(selectIndex);
+            equipmentObjectList[selectIndex].transform.GetChild(0).GetComponent<Image>().DOKill();
+
+            buttonList[selectIndex].transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            buttonList[selectIndex].transform.GetChild(1).GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0.5f);
         }
 
         selectIndex = index;
