@@ -24,7 +24,7 @@ public class EquipmentManager : ScriptableObject
     public MyEquipment GetRandomEquipment()
     {
         MyEquipment myEquipment = new MyEquipment();
-        myEquipment.UID = GUID.Generate().ToString();
+        myEquipment.UID = System.Guid.NewGuid().ToString();
         myEquipment.equipment = allEquipmentList[Random.Range(0, allEquipmentList.Count)];
 
         myEquipment.equipmentClass = (EquipmentClass)Random.Range(0, 2);

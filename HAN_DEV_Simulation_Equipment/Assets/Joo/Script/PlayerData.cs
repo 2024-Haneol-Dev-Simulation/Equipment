@@ -17,9 +17,11 @@ public class PlayerData : ScriptableObject
     public string EngineEquipEquipmentInstanceID;
     public List<MyEquipment> InventoryEquipment;
 
-    public void Reset()
+    public void DataReset()
     {
+        EquipStats = new Stats();
         EquipStats.Reset();
+
         HeadEquipEquipmentInstanceID = string.Empty;
         WingEquipEquipmentInstanceID = string.Empty;
         MissleEquipEquipmentInstanceID = string.Empty;

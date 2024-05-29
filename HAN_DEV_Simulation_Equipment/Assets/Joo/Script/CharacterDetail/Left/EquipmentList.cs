@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 using UnityEditor;
 
 public class EquipmentList : UIElement

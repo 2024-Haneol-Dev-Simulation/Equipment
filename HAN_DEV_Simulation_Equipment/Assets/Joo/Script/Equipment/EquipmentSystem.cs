@@ -13,7 +13,7 @@ public class EquipmentSystem : MonoBehaviour
     public string SelectEquipmentID;
     void Start()
     {
-        playerData.Reset();
+        playerData.DataReset();
         for(int i = 0;i<30;i++)
         {
             playerData.InventoryEquipment.Add(equipmentManager.GetRandomEquipment());
