@@ -1,4 +1,3 @@
-//코드 시작
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -5,22 +5,32 @@ public class Gate : MonoBehaviour
     public int healthChange = -10;
     public int attackPowerChange = 5;
 
+    public float speed = 5.0f; // 오브젝트의 낙하 속도
+    public float resetHeight = -10.0f; // 이 높이 이하로 내려갔을 때 리셋
+    public float startPositionY = 10.0f; // 리셋 위치의 Y 좌표
+
+    private void Update()
+    {
+        transform.Translate(Vector3.down * speed * Time.deltaTime);
+
+        if (transform.position.y < resetHeight)
+        {
+            transform.position = new Vector3(transform.position.x, startPositionY, transform.position.z);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
-        Debug.Log(other.gameObject);
-        // 충돌한 오브젝트가 Player 태그를 가지고 있는지 확인합니다.
         if (other.gameObject.tag == "Player")
         {
-            // Player 컴포넌트를 가져옵니다.
+
             PlayerSample player = other.GetComponent<PlayerSample>();
             if (player != null)
             {
-                // Player의 체력과 공격력을 변경합니다.
+
                 player.health += healthChange;
                 player.attackPower += attackPowerChange;
 
-                // 로그를 통해 변경된 값을 확인합니다.
                 Debug.Log("Player health: " + player.health);
                 Debug.Log("Player attackPower: " + player.attackPower);
             }
