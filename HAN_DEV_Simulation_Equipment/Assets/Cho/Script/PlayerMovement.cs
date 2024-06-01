@@ -7,9 +7,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
 
-        Vector3 move = new Vector3(moveX, moveY, 0f) * moveSpeed * Time.deltaTime;
+        Vector3 move = new Vector3(moveX,0f, 0f) * moveSpeed * Time.deltaTime;
 
         transform.position += move;
     }
