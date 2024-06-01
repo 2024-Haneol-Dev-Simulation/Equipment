@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Joo/Scenes/EquipmentUI.unity
+    guid: 841099db6ba170846a481627febba55e
   m_configObjects: {}

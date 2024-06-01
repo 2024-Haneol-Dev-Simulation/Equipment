@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf47c03d79580049bc6ebc73de3abca, type: 3}
+  m_Name: EquipmentSet
+  m_EditorClassIdentifier: 
+  equipmentSets:
+  - setName: "\uBC41\uC0C8\uC758 \uC774\uC57C\uAE30"
+    Set2option:
+      optionType: 2
+      value: 20
+    Set4option: "\uACF5\uACA9\uC774 \uC911\uCCA9\uB9C8\uB2E4 \uACF5\uACA9\uB825\uC774
+      \uC99D\uAC00\uD569\uB2C8\uB2E4"
+    equipment:
+    - {fileID: 11400000, guid: d9b66df8e8fdca9408591e874736694a, type: 2}
+    - {fileID: 11400000, guid: 717beed9acc53964cab2109bcb3550e7, type: 2}
+    - {fileID: 11400000, guid: d6c55ea6d1ce7c341b3086ceeca29e8a, type: 2}
+    - {fileID: 11400000, guid: c01b79cba12051a489c712149a504909, type: 2}
+  - setName: "\uAD34\uBB3C\uC774 \uD53C\uB294 \uC232"
+    Set2option:
+      optionType: 0
+      value: 18
+    Set4option: "\uAE30\uBCF8 \uACF5\uACA9\uC5D0 \uB3C4\uD2B8 \uB370\uBBF8\uC9C0\uAC00
+      \uCD94\uAC00\uB429\uB2C8\uB2E4"
+    equipment:
+    - {fileID: 11400000, guid: fba881f465f7d484b8bf6c0ec94b92bd, type: 2}
+    - {fileID: 11400000, guid: 09a3687ddeab40a4c82b736a46e1d4a0, type: 2}
+    - {fileID: 11400000, guid: c7a2b6997a2728b4c88fe4dc3040d141, type: 2}
+    - {fileID: 11400000, guid: 54d48cb38e072a64e99ef28b86e00a5b, type: 2}
